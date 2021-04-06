@@ -2,14 +2,17 @@
 
 [![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square)](LICENSE)
 
-  This project showcases the rich `AWS S3 Select` feature to stream a large data file in a paginated style.
+  This project showcases the rich `AWS S3 Select` feature to stream a large data file in a `paginated style`.
   
   Currently, `S3 Select` does not support `OFFSET` and hence we cannot paginate the results of the query. Hence, we use `scanrange` feature to stream the contents of the S3 file.
 
-  <!-- You can find an in-depth article on this implementation [here](https://dev.to/idrisrampurawala/flask-boilerplate-structuring-flask-app-3kcd). -->
 
-# Contributing
-  We encourage you to contribute to Flask Boilerplate! Please check out the [Contributing](CONTRIBUTING.md) guidelines about how to proceed.
+# Background
+Importing (reading) a large file leads `Out of Memory` error. It can also lead to a system crash event. There are libraries viz. Pandas, Dask, etc. which are very good at processing large files but again the file is to be present locally i.e. we will have to import it from S3 to our local machine. But what if we do not want to fetch and store the whole S3 file locally at once? :thinking:
+
+Well, we can make use of `AWS S3 Select` to stream a large file via it's `ScanRange` parameter. This approach is similar to how a pginated API works. Instead of limit and offset on records, we provide the limit and offset on the `bytes to stream`. `S3 Select` is intelligent enough to skip the whole row of the file if it does not fit in the byte range.
+
+You can find an in-depth article on this implementation [here](https://dev.to/idrisrampurawala/efficiently-streaming-a-large-aws-s3-file-via-s3-select-4on).
 
 # Getting Started
 
@@ -17,7 +20,7 @@
 
 - Python 3.9.2 or higher
 - Up and running Redis client
-- AWS account with an S3 bucket and an object
+- AWS account with an S3 bucket and an object (or upload from `/data/data.csv`)
 - `aws-cli` configured locally (having read access to S3)
 
 :scroll: This project is a clone of one of my projects [Flask Boilerplate](https://github.com/idris-rampurawala/flask-boilerplate) to quickly get started on the topic :satisfied:
@@ -83,6 +86,12 @@ $ curl --location --request GET 'http://localhost:5000/api/v1/core/restricted' -
 ```shell
 $ curl --location --request GET 'http://localhost:5000/api/v1/core/s3_select'
 ```
+
+# Resouces
+- [My post explaining this approach](https://dev.to/idrisrampurawala/efficiently-streaming-a-large-aws-s3-file-via-s3-select-4o)
+- [AWS S3 Select userguide](https://docs.aws.amazon.com/AmazonS3/latest/userguide/selecting-content-from-objects.html)
+- [AWS S3 Select Example](https://aws.amazon.com/blogs/aws/s3-glacier-select/)
+- [AWS S3 Select boto3 reference](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.select_object_content)
 
 # License
  This program is free software under MIT license. Please see the [LICENSE](LICENSE) file in our repository for the full text.
