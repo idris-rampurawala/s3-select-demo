@@ -4,7 +4,8 @@ from werkzeug.local import LocalProxy
 
 from authentication import require_appkey
 
-from .tasks import s3_file_processing_task, test_task
+from .tasks import (s3_file_processing_task, s3_parallel_file_processing_task,
+                    test_task)
 
 core = Blueprint('core', __name__)
 logger = LocalProxy(lambda: current_app.logger)
@@ -37,3 +38,14 @@ def s3_select():
         }
     )
     return 'S3 file processing task initiated'
+
+
+@core.route('/s3_select_parallel', methods=['GET'])
+def s3_select_parallel():
+    s3_parallel_file_processing_task.apply_async(
+        kwargs={
+            'bucket': current_app.config.get('AWS_S3_BUCKET'),
+            'key': current_app.config.get('AWS_S3_KEY')
+        }
+    )
+    return 'S3 parallel file processing task initiated'

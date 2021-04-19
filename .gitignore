@@ -133,3 +133,4 @@ dmypy.json
 
 # project
 log/*
+temp/*

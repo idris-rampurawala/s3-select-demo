@@ -64,7 +64,7 @@ $ pipenv install -d --python 3.9
 - Celery worker can be started with following command
 ```sh
 # run following command in a separate terminal
-$ celery -A celery_worker.celery worker -l=info  
+$ celery -A celery_worker.celery worker -l INFO
 # (append `--pool=solo` for windows)
 ```
 

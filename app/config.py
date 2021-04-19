@@ -16,6 +16,7 @@ class BaseConfig(object):
     API_KEY = environ.get('API_KEY')
     BROKER_URL = environ.get('BROKER_URL')
     RESULT_BACKEND = environ.get('RESULT_BACKEND')
+    BASE_DIR = basedir
     LOG_INFO_FILE = path.join(basedir, 'log', 'info.log')
     LOG_CELERY_FILE = path.join(basedir, 'log', 'celery.log')
     AWS_PROFILE_NAME = environ.get('AWS_PROFILE_NAME') or 'default'
