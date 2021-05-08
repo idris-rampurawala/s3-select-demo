@@ -86,6 +86,10 @@ $ curl --location --request GET 'http://localhost:5000/api/v1/core/restricted' -
 ```shell
 $ curl --location --request GET 'http://localhost:5000/api/v1/core/s3_select'
 ```
+- To test the file parallel processing task, please upload the `/data/data.csv` on your AWS S3 and then update the .env with its bucket, key and profile-name
+```shell
+$ curl --location --request GET 'http://localhost:5000/api/v1/core/s3_select_parallel'
+```
 
 # Resouces
 - [My post explaining this approach](https://dev.to/idrisrampurawala/efficiently-streaming-a-large-aws-s3-file-via-s3-select-4o)

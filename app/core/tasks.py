@@ -1,3 +1,4 @@
+import csv
 from os import path, unlink
 
 from celery import group
@@ -121,6 +122,13 @@ def chunk_file_processor(self, **kwargs):
             end_range=end_byte_range, delimiter=S3_FILE_DELIMITER, header_row=header_row_str)
 
         # 2. Process the chunk file in temp folder
+        id_set = set()
+        with open(file_path) as csv_file:
+            csv_reader = csv.DictReader(csv_file, delimiter=S3_FILE_DELIMITER)
+            for row in csv_reader:
+                # perform any other processing here
+                id_set.add(int(row.get('id')))
+        logger.info(f'{min(id_set)} --> {max(id_set)}')
 
         # 3. delete local file
         if path.exists(file_path):
