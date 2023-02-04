@@ -18,7 +18,7 @@ You can find an in-depth article on this implementation [here](https://dev.to/id
 
 ### Prerequisites
 
-- Python 3.9.2 or higher
+- Python 3.9.13 or higher
 - Up and running Redis client
 - AWS account with an S3 bucket and an object (or upload from `/data/data.csv`)
 - `aws-cli` configured locally (having read access to S3)
@@ -31,6 +31,11 @@ You can find an in-depth article on this implementation [here](https://dev.to/id
 $ git clone https://github.com/idris-rampurawala/s3-select-demo.git
 # move to the project folder
 $ cd s3-select-demo
+```
+If you want to install redis via docker
+```sh
+# at the root of this project 
+$ docker run -d --name="flask-boilerplate-redis" -p 6379:6379 redis
 ```
 
 ### Creating virtual environment
